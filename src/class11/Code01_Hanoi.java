@@ -77,12 +77,39 @@ public class Code01_Hanoi {
 	}
 
 	// 1~i 圆盘 目标是from -> to， other是另外一个
+
+	/**
+	 * 汉诺塔问题如何划分成子问题，1- N的圆盘中，N表示最大的圆盘，如果将1-N从圆盘 from柱子 移动到 to柱子 呢?
+	 *
+	 * 而且在整个过程中不能大的压小的
+	 *
+	 * 1.化解子问题，我们思考一下，N是最大的圆盘，也就是在1- (N-1)的所有圆盘在移动的过程中
+	 * N永远在最底下，也就是说N永远都不会压到其他的小圆盘
+	 *
+	 * 2.这样我们就有了化解的思路
+	 *    a. 将1- （n-1）先放到 other上，不管是如何做到的，反正假设一定能做到
+	 *    b. 将N 放到 to 中，这一步肯定是最简单的
+	 *    c. 将 1- （n-1）放回to， 放回的过程我们肯定是忽略N的，因为N最大，永远不会被比他大的压住
+	 *       所以可以认为在移动 1- （n-1）的过程中，N是被忽略掉的
+	 *
+	 *  3. 这样我就知道移动 1 - （n-1）的过程和移动 1- n的过程是同一个递归，由此可解
+	 *
+	 *
+	 * @param N  n个圆盘
+	 * @param from 从柱子from开始移动
+	 * @param to  这是目的地柱子
+	 * @param other 这是一个用于缓存的柱子
+	 */
 	public static void func(int N, String from, String to, String other) {
+		// 如果已经递归到了最上面最小的圆盘，直接移动即可，这也是递归的出口
 		if (N == 1) { // base
 			System.out.println("Move 1 from " + from + " to " + to);
 		} else {
+			// 将 1 - (n-1) 个圆盘先从from 移动到 other ,to 作为缓存区
 			func(N - 1, from, other, to);
+			// 将N移动到 to,N到达目的地后永远可以不再变化了，后面的交给 1- （N-1）
 			System.out.println("Move " + N + " from " + from + " to " + to);
+			// 将 1 - (n-1) 从other移动到to即可
 			func(N - 1, other, to, from);
 		}
 	}
