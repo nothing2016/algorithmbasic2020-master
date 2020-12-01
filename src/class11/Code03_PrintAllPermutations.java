@@ -3,6 +3,10 @@ package class11;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *
+ * 打印全排列
+ */
 public class Code03_PrintAllPermutations {
 
 	public static ArrayList<String> permutation(String str) {
@@ -44,11 +48,14 @@ public class Code03_PrintAllPermutations {
 	// str[0..i-1]已经做好决定的
 	// str[i...]都有机会来到i位置
 	// i终止位置，str当前的样子，就是一种结果 -> ans
+	// 分支限界
 	public static void process2(char[] str, int i, ArrayList<String> res) {
 		if (i == str.length) {
 			res.add(String.valueOf(str));
 			return;
 		}
+		// 对应当前的一个父分支的一层中（所以的亲兄弟节点），同一个值不能在一个位置出现两次，这就是分支限界
+		// 并且visit一定要是局部变量，因为只属于一层内（亲兄弟）的判定
 		boolean[] visit = new boolean[26]; // visit[0 1 .. 25]
 		for (int j = i; j < str.length; j++) {
 			// str[j] = 'a'   -> 0   visit[0] -> 'a'

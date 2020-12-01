@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
+/**
+ * 打印子序列
+ */
 public class Code02_PrintAllSubsquences {
 
 	public static List<String> subs(String s) {
