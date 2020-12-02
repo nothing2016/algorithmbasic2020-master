@@ -1,8 +1,10 @@
 package class11;
 
 /**
+ * 从左往右的递归模型
+ *
  * 题目： 规定1和a对应，2和b对应，3和c对应
- * 那么111 就可以转成 aaa ak ka
+ * 那么111 就可以转成 aaa ak ka，能转成3种结果
  * 给定一个只有数字组成的数字，能转成多少种结果
  */
 public class Code06_ConvertToLetterString {
