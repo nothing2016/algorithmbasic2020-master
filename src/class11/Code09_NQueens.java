@@ -1,5 +1,8 @@
 package class11;
 
+/**
+ * N皇后问题，时间复杂度O(n^n)
+ */
 public class Code09_NQueens {
 
 	public static int num1(int n) {
@@ -21,6 +24,7 @@ public class Code09_NQueens {
 			return 1;
 		}
 		// 没有到终止位置，还有皇后要摆
+		// 结果一定要在for循环这前定义，因为要搜集所有列摆放的结果
 		int res = 0;
 		for (int j = 0; j < n; j++) { // 当前行在i行，尝试i行所有的列  -> j
 			// 当前i行的皇后，放在j列，会不会和之前(0..i-1)的皇后，不共行共列或者共斜线，
@@ -28,6 +32,8 @@ public class Code09_NQueens {
 			// 如果不是，认为无效
 			if (isValid(record, i, j)) {
 				record[i] = j;
+				// 加法的意思就是： 当皇后放在i行j列这种情况时，i+1，i+2...n行一共有多少摆法
+				// 所以一定是加法，因为，i行的j是一个for循环，需要每一列都尝试一下，已经是乘法的意思了
 				res += process1(i + 1, record, n);
 			}
 		}
@@ -69,7 +75,7 @@ public class Code09_NQueens {
 		if (colLim == limit) { // base case
 			return 1;
 		}
-		// 所有可以放皇后的位置，都在pos上
+		// 所有可以放皇后的位置，都在pos上，pos上的所有位中，1表示可以放皇后
 		// colLim | leftDiaLim | rightDiaLim   -> 总限制
 		// ~ (colLim | leftDiaLim | rightDiaLim) -> 左侧的一坨0干扰，右侧每个1，可尝试
 		int pos = limit & ( ~(colLim | leftDiaLim | rightDiaLim) );
@@ -78,8 +84,10 @@ public class Code09_NQueens {
 		while (pos != 0) {
 			// 其取出pos中，最右侧的1来，剩下位置都是0
 			mostRightOne = pos & (~pos + 1);
-			pos = pos - mostRightOne;
-			res += process2(limit, 
+//			pos = pos - mostRightOne;
+			// 因为mostRightOne位置放了皇后，之后就不能再放了，所以这一位需要变成0
+			pos = pos ^ mostRightOne;
+			res += process2(limit,
 					colLim | mostRightOne,
 					(leftDiaLim | mostRightOne) << 1,
 					(rightDiaLim | mostRightOne) >>> 1);
@@ -88,7 +96,7 @@ public class Code09_NQueens {
 	}
 
 	public static void main(String[] args) {
-		int n = 15;
+		int n = 8;
 
 		long start = System.currentTimeMillis();
 		System.out.println(num2(n));

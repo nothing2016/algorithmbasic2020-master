@@ -1,5 +1,9 @@
 package class12;
 
+/**
+ * 硬币问题：给定一个正整数数字，表示面值，比如[100,5,10,50],里面的钱可以使用无数次，
+ * 在给定一个数aim,比如1000，求使用上面的数值拼凑成1000元，一共有多少种方法？
+ */
 public class Code09_CoinsWay {
 
 	// arr中都是正数且无重复值，返回组成aim的方法数
@@ -10,7 +14,16 @@ public class Code09_CoinsWay {
 		return process1(arr, 0, aim);
 	}
 
+	/**
+	 * 当可以使用arr[index .....] index和后面的面值时，有多少
+	 * 种方法可以拼凑成 rest
+	 * @param arr
+	 * @param index
+	 * @param rest
+	 * @return
+	 */
 	public static int process1(int[] arr, int index, int rest) {
+		// 如果数组已经到最后没有面值的一位了，只有刚好凑齐，才返回1
 		if(index == arr.length) {
 			return rest == 0 ? 1 : 0 ;	
 		}
@@ -21,6 +34,12 @@ public class Code09_CoinsWay {
 		return ways;
 	}
 
+	/**
+	 * 加上缓存的记忆化方法
+	 * @param arr
+	 * @param aim
+	 * @return
+	 */
 	public static int ways2(int[] arr, int aim) {
 		if (arr == null || arr.length == 0 || aim < 0) {
 			return 0;
@@ -55,7 +74,13 @@ public class Code09_CoinsWay {
 		dp[index][rest] = ways;
 		return ways;
 	}
-	
+
+	/**
+	 * 硬改的动态规划，没有优化后的
+	 * @param arr
+	 * @param aim
+	 * @return
+	 */
 	public static int ways3(int[] arr, int aim) {
 		if (arr == null || arr.length == 0 || aim < 0) {
 			return 0;
@@ -74,7 +99,13 @@ public class Code09_CoinsWay {
 		}
 		return dp[0][aim];
 	}
-	
+
+	/**
+	 * 观察规律后修改的动态规划
+	 * @param arr
+	 * @param aim
+	 * @return
+	 */
 	public static int ways4(int[] arr, int aim) {
 		if (arr == null || arr.length == 0 || aim < 0) {
 			return 0;
