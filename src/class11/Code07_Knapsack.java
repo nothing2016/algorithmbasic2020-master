@@ -59,9 +59,12 @@ public class Code07_Knapsack {
 		int[][] dp = new int[N + 1][bag + 1];
 		for (int index = N - 1; index >= 0; index--) {
 			for (int rest = 1; rest <= bag; rest++) {
-				dp[index][rest] = dp[index + 1][rest];
+//				dp[index][rest] = dp[index + 1][rest];
+				// 这里如果不这样写，就会掉进一个大坑中，因为必须要给付初始值dp[index][rest] = dp[index + 1][rest];
 				if (rest >= w[index]) {
-					dp[index][rest] = Math.max(dp[index][rest], v[index] + dp[index + 1][rest - w[index]]);
+					dp[index][rest] = Math.max(dp[index + 1][rest], v[index] + dp[index + 1][rest - w[index]]);
+				}else{
+					dp[index][rest] = dp[index + 1][rest];
 				}
 			}
 		}
