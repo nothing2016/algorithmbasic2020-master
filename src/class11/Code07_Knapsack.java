@@ -1,5 +1,8 @@
 package class11;
 
+/**
+ * 背包问题
+ */
 public class Code07_Knapsack {
 
 	public static int getMaxValue(int[] w, int[] v, int bag) {
@@ -15,7 +18,9 @@ public class Code07_Knapsack {
 		if (alreadyW > bag) {
 			return -1;
 		}
-		// 重量没超
+		// 到这里证明重量没超
+
+		// 如果没有货了
 		if (index == w.length) {
 			return 0;
 		}
@@ -37,16 +42,20 @@ public class Code07_Knapsack {
 	// index...货物自由选择，但是剩余空间不要小于0
 	// 返回 index...货物能够获得的最大价值
 	public static int process(int[] w, int[] v, int index, int rest) {
+		// 没有空间了
 		if (rest < 0) { // base case 1
 			return -1;
 		}
 		// rest >=0
+		// 没有货了
 		if (index == w.length) { // base case 2
 			return 0;
 		}
 		// 有货也有空间
+		// 1.不要当前的这个index的货
 		int p1 = process(w, v, index + 1, rest);
 		int p2 = -1;
+		// 2.要当前这个index的货
 		int p2Next = process(w, v, index + 1, rest - w[index]);
 		if(p2Next!=-1) {
 			p2 = v[index] + p2Next;
@@ -57,11 +66,13 @@ public class Code07_Knapsack {
 	public static int dpWay(int[] w, int[] v, int bag) {
 		int N = w.length;
 		int[][] dp = new int[N + 1][bag + 1];
+		// 当index == w.length ,dp[w.length][i]都是0，所以不需要初始化了
 		for (int index = N - 1; index >= 0; index--) {
 			for (int rest = 1; rest <= bag; rest++) {
 				dp[index][rest] = dp[index + 1][rest];
+				// 这里如果不这样写，就会掉进一个大坑中，因为必须要给付初始值dp[index][rest] = dp[index + 1][rest];
 				if (rest >= w[index]) {
-					dp[index][rest] = Math.max(dp[index][rest], v[index] + dp[index + 1][rest - w[index]]);
+					dp[index][rest] = Math.max(dp[index + 1][rest], v[index] + dp[index + 1][rest - w[index]]);
 				}
 			}
 		}
