@@ -30,7 +30,7 @@ public class Code03_Knapsack {
 	}
 
 	// 只剩下rest的空间了，
-	// index...货物自由选择，但是不要超过rest的空间
+	// [0...index-1]已经做好选择，index...货物自由选择，但是不要超过rest的空间
 	// 返回能够获得的最大价值
 	public static int process(int[] w, int[] v, int index, int rest) {
 		if (rest < 0) { // base case 1
