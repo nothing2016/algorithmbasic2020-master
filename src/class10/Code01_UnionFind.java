@@ -16,11 +16,11 @@ public class Code01_UnionFind {
 
 	public static class UnionSet<V> {
 		// 当前值对应的包装类
-		public HashMap<V, Node<V>> nodes;
+		public HashMap<V, Node<V>> nodes = new HashMap<>();
 		// 当前节点的父亲节点，优化后表示当前节点对应的集合跟节点
-		public HashMap<Node<V>, Node<V>> parents;
+		public HashMap<Node<V>, Node<V>> parents = new HashMap<>();
 		// 集合根节点对应的集合的大小
-		public HashMap<Node<V>, Integer> sizeMap;
+		public HashMap<Node<V>, Integer> sizeMap = new HashMap<>();
 
 		public UnionSet(List<V> values) {
 			for (V cur : values) {
